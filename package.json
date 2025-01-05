@@ -1,0 +1,24 @@
+{
+  "name": "sotalliancebot",
+  "version": "1.0.0",
+  "description": "Discord bot responsible for managing queues.",
+  "author": {
+    "name": "Aditya Harvi"
+  },
+  "license": "ISC",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node ."
+  },
+  "dependencies": {
+    "discord.js": "^14.17.2",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2"
+  }
+}

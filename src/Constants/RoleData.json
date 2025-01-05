@@ -1,0 +1,14 @@
+{
+    "roles": [
+        {
+            "RoleName": "Alliance Queue Admin",
+            "RoleColor": "Blue",
+            "RoleCreationReason": "This role supports admin capabilities related to the queue in addition to all mod capabilities."
+        },
+        {
+            "RoleName": "Alliance Queue Mod",
+            "RoleColor": "Purple",
+            "RoleCreationReason": "This role supports mod capabilities related to the queue."
+        }
+    ]
+}
