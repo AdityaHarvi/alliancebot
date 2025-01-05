@@ -14,14 +14,15 @@ export class GuildInitializer implements InitializerInterface {
         this.subInitializers = [];
         this.subInitializers.push(new RoleInitializer(guild.roles));
         this.subInitializers.push(new CommandInitializer(guild.id));
-        this.subInitializers.push(new ChannelInitializer(guild.channels));
+        this.subInitializers.push(new ChannelInitializer(guild.id, guild.channels, guild.roles));
     }
 
     // BEGIN: InitializerInterface
-    public executeInitializer() {
-        this.subInitializers.forEach((initializer) => {
-            initializer.executeInitializer();
-        });
+    public async executeInitializer(): Promise<void> {
+        // Ensure the subInitializers initialize sequentially as certain initializers depend on previous ones.
+        for (const initializer of this.subInitializers) {
+            await initializer.executeInitializer();
+        }
     }
     // END: InitializerInterface
 

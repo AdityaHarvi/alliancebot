@@ -13,19 +13,13 @@ export class CommandInitializer implements InitializerInterface {
     }
 
     // BEGIN: InitializerInterface
-    public executeInitializer(): void {
-        this.deployCommands(this.guildID);
-    }
-    // END: InitializerInterface
-
-    // Private:
-    private async deployCommands(guildID: string): Promise<void> {
+    public async executeInitializer(): Promise<void> {
         try {
             const commandsData: SlashCommandBuilder[] = Object.values(commands).map((command) => command.data);
             const rest: REST = new REST({ version: "10" }).setToken(config.DISCORD_TOKEN);
 
             await rest.put(
-                Routes.applicationGuildCommands(config.DISCORD_CLIENT_ID, guildID),
+                Routes.applicationGuildCommands(config.DISCORD_CLIENT_ID, this.guildID),
                 {
                     body: commandsData,
                 }
@@ -37,6 +31,8 @@ export class CommandInitializer implements InitializerInterface {
             console.error(error);
         }
     }
+    // END: InitializerInterface
 
+    // Private:
     private guildID: string;
 }

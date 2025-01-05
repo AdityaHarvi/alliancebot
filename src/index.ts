@@ -8,7 +8,8 @@ export const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.DirectMessages],
+    GatewayIntentBits.DirectMessages,
+  ]
 });
 
 client.once("ready", async () => {

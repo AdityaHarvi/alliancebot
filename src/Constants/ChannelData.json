@@ -10,34 +10,19 @@
             "channelName": "Alliance Queue",
             "channelType": "Text",
             "reason": "The queue is made visible to all players from this channel. This is also where most queue interactions take place.",
-            "private":
-            {
-                "isPrivate": false,
-                "validRoles": []
-            }
+            "isPrivate": false
         },
         {
             "channelName": "Alliance Telemetry",
             "channelType": "Text",
             "reason": "A behind-the-scenes channel where the bot posts telemetry related information. Feel free to mute this channel.",
-            "private":
-            {
-                "isPrivate": true,
-                "validRoles": [
-                    "Admin",
-                    "Mod"
-                ]
-            }
+            "isPrivate": true
         },
         {
             "channelName": "Alliance Waiting Room",
             "channelType": "Voice",
             "reason": "Players need to enter this VC to be automatically assigned to the appropriate ship-VC.",
-            "private":
-            {
-                "isPrivate": false,
-                "validRoles": []
-            }
+            "isPrivate": false
         }
     ]
 }
