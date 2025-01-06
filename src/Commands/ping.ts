@@ -4,6 +4,6 @@ export const data = new SlashCommandBuilder()
   .setName("ping")
   .setDescription("Replies with Pong!");
 
-export async function execute(Interaction: CommandInteraction) {
-  return Interaction.reply(userMention(Interaction.user.id) + " Test");
+export async function execute(interaction: CommandInteraction) {
+  return interaction.reply(userMention(interaction.user.id) + " Test");
 }

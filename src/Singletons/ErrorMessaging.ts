@@ -11,7 +11,7 @@ export class ErrorMessaging {
         return this.instance;
     }
 
-    public replyToUserWithError(interaction: CommandInteraction<CacheType>, message: string): void {
+    public replyToUserWithError(interaction: CommandInteraction, message: string): void {
         interaction.reply({
             content: message,
             flags: MessageFlags.Ephemeral

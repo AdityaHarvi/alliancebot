@@ -22,11 +22,11 @@ export class RoleCache {
         this.roleCache.push(role);
     }
 
-    public getRoleOfType(roleType: ERoleTypes): Role | undefined {
+    public getRoleOfType(roleType: ERoleTypes): Role | null {
         try {
-            const foundRoleData = RoleData.roles.find((role) => role.RoleType === roleType.toString());
+            const foundRoleData = RoleData.roles.find((role) => role.RoleType === ERoleTypes[roleType]);
             if (foundRoleData === undefined) {
-                throw new Error(`No role of type ${roleType.toString()} was found.`);
+                throw new Error(`No role of type ${ERoleTypes[roleType]} was found.`);
             }
     
             const foundRole: Role | undefined = this.roleCache.find(role => role.name === foundRoleData.RoleName);
@@ -38,7 +38,7 @@ export class RoleCache {
         }
         catch (error) {
             console.log(error);
-            return undefined;
+            return null;
         }
     }
 
