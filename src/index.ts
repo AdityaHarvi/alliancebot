@@ -1,8 +1,10 @@
 import { Client, GatewayIntentBits, Guild } from "discord.js";
 import { config } from "./Config";
-import { commands } from "./Commands/Commands";
 import { GuildInitializer } from "./Initializers/GuildInitializer";
 import { InitializerInterface } from "./Initializers/InitializerInterface";
+import { CommandManagerSingleton } from "./Singletons/CommandManagerSingleton";
+import { CommandBase } from "./Commands/CommandBase";
+import { ErrorMessagingFunctionLibrary } from "./Singletons/FunctionLibraries/ErrorMessagingFunctionLibrary";
 
 export const client = new Client({
   intents: [
@@ -36,10 +38,12 @@ client.on("interactionCreate", async (interaction) => {
     return;
   }
 
-  const { commandName } = interaction;
-  if (commands[commandName as keyof typeof commands]) {
-    commands[commandName as keyof typeof commands].execute(interaction);
+  const command: CommandBase | undefined = CommandManagerSingleton.getInstance().getCommandFromName(interaction.commandName);
+  if (!command) {
+    return ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "ERROR: Invalid command received.");
   }
+
+  command.execute(interaction);
 });
 
 client.login(config.DISCORD_TOKEN);
