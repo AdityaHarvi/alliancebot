@@ -1,6 +1,5 @@
 import { CommandBase } from "../Commands/CommandBase";
 import { QueueCreate } from "../Commands/QueueCreate";
-import fs from "fs";
 
 export class CommandManagerSingleton {
     // Public:
@@ -14,28 +13,24 @@ export class CommandManagerSingleton {
     }
 
     public getCommandList(): CommandBase[] {
-        return this.commandList;
+        return Array.from(this.nameToCommandMap.values());
     }
 
     public getCommandFromName(name: string): CommandBase | undefined {
-        return this.commandList.find(command => command.getName() === name);
+        return this.nameToCommandMap.get(name);
     }
 
     // Private:
     private constructor() {
-        this.commandList = [];
-        this.commandList.push(new QueueCreate());
+        this.nameToCommandMap = new Map<string, CommandBase>();
+        this.addCommandToMap(QueueCreate);
+    }
 
-        // fs.readdirSync("src/Commands/").forEach(file => {
-        //     const newCommand: CommandBase = require(`../Commands/${file}`);
-        //     if (newCommand.getName() === "") { return; }
-
-        //     newCommand.constructor;
-
-        //     this.commandList.push(new newCommand);
-        // });
+    private addCommandToMap<commandClass extends CommandBase>(classToCreate: new () => commandClass) {
+        const instance: CommandBase = new classToCreate();
+        this.nameToCommandMap.set(instance.getName(), instance);
     }
 
     private static instance: CommandManagerSingleton;
-    private commandList: CommandBase[];
+    private nameToCommandMap: Map<string, CommandBase>;
 }
