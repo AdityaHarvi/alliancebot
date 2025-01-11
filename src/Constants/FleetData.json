@@ -1,0 +1,21 @@
+{
+    "minNumShipsInFleet": 2,
+    "maxNumShipsInFleet": 5,
+    "shipTypes": [
+        "s",
+        "b",
+        "g"
+    ],
+    "shipActivities": [
+        "fotd",
+        "we",
+        "a",
+        "gh",
+        "oos",
+        "m",
+        "f",
+        "sk",
+        "sf",
+        "tt"
+    ]
+}

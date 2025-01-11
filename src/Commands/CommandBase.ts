@@ -1,15 +1,21 @@
-import { CommandInteraction, InteractionResponse, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, ModalSubmitInteraction, SlashCommandBuilder } from "discord.js";
 import { ErrorMessagingFunctionLibrary } from "../Singletons/FunctionLibraries/ErrorMessagingFunctionLibrary";
 
 export abstract class CommandBase {
     // Public:
     public constructor(name: string, description: string) {
-        this.name = name;
+        this.name = name.replace(/\s/g, "").toLowerCase();
         this.description = description;
     }
 
-    public async execute(interaction: CommandInteraction): Promise<InteractionResponse<boolean>> {
-        return ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "ERROR: Unhanded action.");
+    public async execute(interaction: CommandInteraction): Promise<void> {
+        ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "ERROR: Unhanded action.");
+        return;
+    }
+
+    public async handleModalSubmit(interaction: ModalSubmitInteraction): Promise<void> {
+        ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "ERROR: Unhanded action.");
+        return;
     }
 
     public getData(): SlashCommandBuilder {
@@ -22,7 +28,7 @@ export abstract class CommandBase {
         return this.name;
     }
 
-    // Private:
-    private name: string;
-    private description: string;
+    // Protected:
+    protected name: string;
+    protected description: string;
 }

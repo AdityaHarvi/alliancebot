@@ -1,19 +1,12 @@
-import { CommandBase } from "../Commands/CommandBase";
-import { FleetCreate } from "../Commands/FleetCreate";
-
-export class CommandManagerSingleton {
+export class ModalManagerSingleton {
     // Public:
     public static getInstance() {
         if (this.instance === undefined) {
-            this.instance = new CommandManagerSingleton();
+            this.instance = new ModalManagerSingleton();
             return this.instance;
         }
 
         return this.instance;
-    }
-
-    public getCommandList(): CommandBase[] {
-        return Array.from(this.nameToCommandMap.values());
     }
 
     public getCommandFromName(name: string): CommandBase | undefined {
@@ -23,7 +16,6 @@ export class CommandManagerSingleton {
     // Private:
     private constructor() {
         this.nameToCommandMap = new Map<string, CommandBase>();
-        this.addCommandToMap(FleetCreate);
     }
 
     private addCommandToMap<commandClass extends CommandBase>(classToCreate: new () => commandClass) {
@@ -31,6 +23,6 @@ export class CommandManagerSingleton {
         this.nameToCommandMap.set(instance.getName(), instance);
     }
 
-    private static instance: CommandManagerSingleton;
-    private nameToCommandMap: Map<string, CommandBase>;
+    private static instance: ModalManagerSingleton;
+    private activeModalIds: ;
 }

@@ -1,10 +1,10 @@
-import { CommandInteraction, InteractionResponse, MessageFlags } from "discord.js";
+import { CommandInteraction, InteractionResponse, Message, MessageFlags, ModalSubmitInteraction } from "discord.js";
 
 export class ErrorMessagingFunctionLibrary {
     // Public:
-    public static replyToUserWithError(interaction: CommandInteraction, message: string): Promise<InteractionResponse<boolean>> {
+    public static replyToUserWithError(interaction: CommandInteraction | ModalSubmitInteraction, message: string): Promise<InteractionResponse<boolean>> {
         return interaction.reply({
-            content: message,
+            content: `ERROR: ${message}`,
             flags: MessageFlags.Ephemeral
         });
     }

@@ -47,7 +47,7 @@ export class ChannelInitializer implements InitializerInterface {
                         deny: [PermissionFlagsBits.ViewChannel]
                     });
     
-                    RoleData.roles.forEach(currentRoleData => {
+                    for (let currentRoleData of RoleData.roles) {
                         const foundRole: Role | undefined = this.roleManager.cache.find((role) => role.name === currentRoleData.RoleName);
                         if (foundRole === undefined) {
                             throw new Error(`Failed to find role with name: ${currentRoleData.RoleName}`);
@@ -57,8 +57,7 @@ export class ChannelInitializer implements InitializerInterface {
                             id: foundRole.id,
                             allow: [PermissionFlagsBits.ViewChannel]
                         });
-                    });
-    
+                    }
                     
                     newChannel.edit({
                         permissionOverwrites: permissions

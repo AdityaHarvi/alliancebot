@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Guild } from "discord.js";
+import { Client, GatewayIntentBits, Guild, ModalSubmitInteraction } from "discord.js";
 import { config } from "./Config";
 import { GuildInitializer } from "./Initializers/GuildInitializer";
 import { InitializerInterface } from "./Initializers/InitializerInterface";
@@ -34,16 +34,23 @@ client.on("guildCreate", async (guild) => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isChatInputCommand()) {
-    return;
+  if (interaction.isChatInputCommand()) {
+    const command: CommandBase | undefined = CommandManagerSingleton.getInstance().getCommandFromName(interaction.commandName);
+    if (!command) {
+      return ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "Invalid command received.");
+    }
+
+    command.execute(interaction);
   }
 
-  const command: CommandBase | undefined = CommandManagerSingleton.getInstance().getCommandFromName(interaction.commandName);
-  if (!command) {
-    return ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "ERROR: Invalid command received.");
+  if (interaction.isModalSubmit()) {
+    const command: CommandBase | undefined = CommandManagerSingleton.getInstance().getCommandFromName(interaction.customId);
+    if (!command) {
+      return ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "Invalid command received.");
+    }
+    
+    command.handleModalSubmit(interaction);
   }
-
-  command.execute(interaction);
 });
 
 client.login(config.DISCORD_TOKEN);
