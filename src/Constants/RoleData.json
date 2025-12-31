@@ -11,6 +11,12 @@
             "RoleColor": "Purple",
             "RoleCreationReason": "This role supports mod capabilities related to the queue.",
             "RoleType": "Mod"
+        },
+        {
+            "RoleName": "On Duty",
+            "RoleColor": "Orange",
+            "RoleCreationReason": "This role dictates which staff members are actively managing the queue. They will be pinged for actions requiring urgent action",
+            "RoleType": "Mod"
         }
     ]
 }

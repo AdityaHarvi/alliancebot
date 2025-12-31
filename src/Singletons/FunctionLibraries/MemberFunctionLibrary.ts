@@ -1,9 +1,9 @@
 import { Collection, GuildMember, Role } from "discord.js";
-import { ERoleTypes, RoleCache } from "../RoleCache";
+import { ERoleType, RoleCache } from "../RoleCache";
 
 export class MemberFunctionLibrary {
     // Public:
-    public static doesMemberHaveRole(member: GuildMember, roleType: ERoleTypes): boolean {
+    public static doesMemberHaveRole(member: GuildMember, roleType: ERoleType): boolean {
         try {
             if (!member) {
                 throw new Error("MemberFunctionLibrary::doesMemberHaveRole: Invalid 'member' provided.");
@@ -24,7 +24,7 @@ export class MemberFunctionLibrary {
     }
 
     public static isMemberStaff(member: GuildMember) {
-        return this.doesMemberHaveRole(member, ERoleTypes.Admin) || this.doesMemberHaveRole(member, ERoleTypes.Mod);
+        return this.doesMemberHaveRole(member, ERoleType.Admin) || this.doesMemberHaveRole(member, ERoleType.Mod);
     }
 
     // Private:

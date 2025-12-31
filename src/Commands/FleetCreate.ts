@@ -1,9 +1,10 @@
 import { ActionRowBuilder, CommandInteraction, GuildMember, ModalActionRowComponentBuilder, ModalBuilder, ModalSubmitInteraction, TextInputBuilder, TextInputStyle } from "discord.js";
-import { ERoleTypes } from "../Singletons/RoleCache";
+import { ERoleType } from "../Singletons/RoleCache";
 import { ErrorMessagingFunctionLibrary } from "../Singletons/FunctionLibraries/ErrorMessagingFunctionLibrary";
 import { MemberFunctionLibrary } from "../Singletons/FunctionLibraries/MemberFunctionLibrary";
 import { CommandBase } from "./CommandBase";
 import FleetData from "../Constants/FleetData.json";
+import { FleetFunctionLibrary } from "../Singletons/FunctionLibraries/FleetFunctionLibrary";
 
 export class FleetCreate extends CommandBase {
     // Public:
@@ -22,7 +23,7 @@ export class FleetCreate extends CommandBase {
             return;
         }
     
-        if (!MemberFunctionLibrary.doesMemberHaveRole(interaction.member as GuildMember, ERoleTypes.Admin)) {
+        if (!MemberFunctionLibrary.doesMemberHaveRole(interaction.member as GuildMember, ERoleType.Admin)) {
             ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, "Only Admins can execute this command.");
             return;
         }
@@ -59,12 +60,12 @@ export class FleetCreate extends CommandBase {
     public override async handleModalSubmit(interaction: ModalSubmitInteraction): Promise<void> {
         const shipTypesString: string[] = interaction.fields.getTextInputValue(`${this.name}-shipTypeInput`).toLowerCase().split(" ");
         if (shipTypesString.length < FleetData.minNumShipsInFleet || shipTypesString.length > FleetData.maxNumShipsInFleet) {
-            ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, `Attempting to create an invalid number of ships. Expected between 2-5 but received '${shipTypesString.length}'.`);
+            ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, `Attempting to create an invalid number of ships. Expected between '${FleetData.minNumShipsInFleet}-${FleetData.maxNumShipsInFleet}' but received '${shipTypesString.length}'.`);
             return;
         }
 
         for (let shipType of shipTypesString) {
-            if (!FleetData.shipTypes.includes(shipType)) {
+            if (FleetFunctionLibrary.getFleetTypeData().get(shipType) === undefined) {
                 ErrorMessagingFunctionLibrary.replyToUserWithError(interaction, `Invalid ship type provided. Expected values of 's', 'b', or 'g', but received '${shipType}'.`);
                 return;
             }

@@ -1,7 +1,7 @@
 import { Role } from "discord.js";
 import RoleData from "../Constants/RoleData.json";
 
-export enum ERoleTypes {
+export enum ERoleType {
     Admin = 1,
     Mod = 2,
 }
@@ -22,11 +22,11 @@ export class RoleCache {
         this.roleCache.push(role);
     }
 
-    public getRoleOfType(roleType: ERoleTypes): Role | null {
+    public getRoleOfType(roleType: ERoleType): Role | null {
         try {
-            const foundRoleData = RoleData.roles.find((role) => role.RoleType === ERoleTypes[roleType]);
+            const foundRoleData = RoleData.roles.find((role) => role.RoleType === ERoleType[roleType]);
             if (foundRoleData === undefined) {
-                throw new Error(`No role of type ${ERoleTypes[roleType]} was found.`);
+                throw new Error(`No role of type ${ERoleType[roleType]} was found.`);
             }
     
             const foundRole: Role | undefined = this.roleCache.find(role => role.name === foundRoleData.RoleName);
